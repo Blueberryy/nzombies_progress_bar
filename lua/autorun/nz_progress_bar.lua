@@ -115,10 +115,11 @@ elseif CLIENT then
 	
 	local function create_font(size, weight)
 		surface.CreateFont("pbgenfont" .. size .. "." .. weight, {
-			font = "DK Umbilical Noose",
+			font = "DK Umbilical Noose2",
 			size = size,
 			weight = weight,
 			antialias = true,
+			extended = true,
 		})
 	end
 	
@@ -259,12 +260,12 @@ elseif CLIENT then
 	
 	net.Receive("update_prog_bar_killed", function()
 		zombies_killed = net.ReadUInt(16)
-		zombies_killed_text = "zombies killed  " .. zombies_killed .. " / " .. (endless and "∞" or zombies_max)
+		zombies_killed_text = translate.Format("nzr_bar_text_first", zombies_killed, (endless and "∞" or zombies_max))
 		progress_percent = endless and math.random() or zombies_killed / zombies_max
 	end)
 	
 	net.Receive("update_prog_bar_max", function()
 		zombies_max = net.ReadUInt(16)
-		zombies_killed_text = "zombies killed  0 / " .. zombies_max
+		zombies_killed_text = translate.Format("nzr_bar_text_second", zombies_max)
 	end)
 end
